@@ -195,55 +195,6 @@ This makes it easy to see:
 
 ---
 
-## “YOLO → back to 3D”: what’s missing vs what’s possible
-
-A key point of intellectual honesty:
-
-### Current pipeline output
-Right now, YOLO outputs:
-- axis-aligned 2D BEV boxes: `(x, y, w, l)` in pixel space → meters
-
-That gives you **ground-plane localization**, but not a complete KITTI 3D box.
-
-### To truly convert YOLO outputs to 3D boxes, you need extra information
-A KITTI 3D bounding box requires:
-- center `(x, y, z)`
-- dimensions `(l, w, h)`
-- yaw (orientation)
-
-A plain 2D BEV axis-aligned box does not uniquely determine:
-- yaw
-- height
-- z center
-- true length vs width under rotation
-
-### Practical upgrade paths
-If I extend this project to real 3D:
-1. **Multi-head regression**
-   - Keep YOLO for `(x,y,w,l)`
-   - Add heads to regress:
-     - yaw (sin/cos)
-     - height `h`
-     - z center
-     - true `(l,w)` if rotated
-2. **Two-stage model**
-   - YOLO generates proposals in BEV
-   - a small MLP/CNN regresses full 3D box attributes per proposal
-3. **Hybrid baseline**
-   - Use a standard 3D detector for 3D AP
-   - Keep BEV-YOLO as a fast 2D BEV baseline and visualization tool
-
----
-
-## What I learned / key takeaways
-
-- Rendering LiDAR into BEV images makes it easy to apply strong 2D detectors.
-- HID channel design (height/intensity/density) matters for performance.
-- Axis-aligned boxes in BEV are a limitation for rotated vehicles.
-- Reporting “3D detection performance” requires careful definition; without true 3D outputs, the honest result is **2D BEV detection performance**.
-
----
-
 ## Future work
 
 - Add oriented BEV boxes (rotated boxes) using a detector that supports them
@@ -260,7 +211,6 @@ This project produces:
 - YOLO dataset folders + YAML config
 - YOLO training runs (`best.pt`, logs)
 - BEV overlay visualizations (GT vs Pred)
-- A demo video showing BEV inference results
 
 ---
 
