@@ -56,9 +56,9 @@ The pipeline transforms raw point clouds into a structured HID (Height, Intensit
 
 ### BEV Predictions  
 <!-- Replace the image paths below with your actual outputs -->
-![BEV Prediction 1](images/pred1.png)
-![BEV Prediction 2](images/pred2.png)
-![BEV Prediction 3](images/pred3.png)
+![BEV Prediction 1](images/image1.png)
+![BEV Prediction 2](images/image2.png)
+![BEV Prediction 3](images/image3.png)
 
 - Ground truth vs predicted boxes overlay  
 - Clear alignment in dense regions  
